@@ -30,24 +30,25 @@ h1, h2, p, figure { margin: 0; }
 .hero-note { margin-top: 27px; color: var(--muted); font-size: 14px; line-height: 1.55; display: none; }
 .hero-feature { width: 100%; max-width: 570px; justify-self: center; margin-top: 2vh; }
 .illustration-stage { position: relative; width: 100%; height: min(73vh, 710px); min-height: 460px; }
-.sketch { position: absolute; margin: 0; overflow: hidden; }
+.sketch { position: absolute; margin: 0; overflow: visible; }
+.drawing-pending .sketch { visibility: hidden; }
+.is-drawing .sketch { visibility: visible; }
 .sketch img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.sketch-rough { position: absolute; inset: 0; opacity: .18; filter: grayscale(1) contrast(.65) blur(.3px); }
+.sketch-pass { position: absolute; inset: 0; overflow: hidden; }
+.sketch-pass img { position: absolute; inset: 0; }
+.sketch-back { clip-path: inset(0 0 50% 0); }
+.sketch-front { clip-path: inset(50% 0 0 0); }
 .sketch--pool { z-index: 1; top: 0; left: -5%; width: 81%; height: 43%; }
 .sketch--marina { z-index: 2; top: 27%; right: -6%; width: 79%; height: 37%; }
 .sketch--rotunda { z-index: 1; bottom: 0; left: -2%; width: 76%; height: 38%; }
 .sketch--penguin { z-index: 3; right: 2%; bottom: 1%; width: 32%; height: 45%; }
-.drawing-edge { display: none; position: absolute; z-index: 4; top: 0; left: 0; width: 100%; height: 2px; background: var(--ink); opacity: 0; }
-.is-drawing .sketch { clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); animation: draw-image 2.5s linear var(--delay) both; }
-.is-drawing .drawing-edge { display: block; animation: pen-line 2.5s linear var(--delay) both; }
-@keyframes draw-image {
-  from { clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); }
-  to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
-}
-@keyframes pen-line {
-  0% { top: 0; opacity: .8; }
-  98% { opacity: .8; }
-  100% { top: 100%; opacity: 0; }
-}
+.is-drawing .sketch-rough { animation: rough-draft .35s ease-out var(--delay) both; }
+.is-drawing .sketch-back { clip-path: inset(0 100% 50% 0); animation: background-detail 1s cubic-bezier(.3,.7,.2,1) calc(var(--delay) + .35s) both; }
+.is-drawing .sketch-front { clip-path: inset(100% 0 0 0); animation: foreground-detail 1.15s cubic-bezier(.25,.65,.2,1) calc(var(--delay) + 1.35s) both; }
+@keyframes rough-draft { from { opacity: 0; filter: grayscale(1) contrast(.4) blur(1.5px); } to { opacity: .2; filter: grayscale(1) contrast(.65) blur(.3px); } }
+@keyframes background-detail { from { clip-path: inset(0 100% 50% 0); filter: blur(.6px); } to { clip-path: inset(0 0 50% 0); filter: blur(0); } }
+@keyframes foreground-detail { from { clip-path: inset(100% 0 0 0); filter: blur(.6px); } to { clip-path: inset(50% 0 0 0); filter: blur(0); } }
 .hero-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 19px; }
 .signature, .footer-name { font-size: 18px; font-weight: 700; font-style: italic; }
 .main-nav { display: flex; gap: clamp(20px, 3.3vw, 52px); font-size: 15px; }
@@ -85,6 +86,6 @@ h1, h2, p, figure { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-delay: 0s !important; }
-  .is-drawing .sketch { clip-path: none; animation: none; }
-  .is-drawing .drawing-edge { display: none; animation: none; }
+  .is-drawing .sketch-rough { animation: none; }
+  .is-drawing .sketch-pass { clip-path: none; animation: none; }
 }
