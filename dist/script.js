@@ -3,11 +3,13 @@ const canvas = document.querySelector(".panorama-canvas");
 const context = canvas.getContext("2d", { alpha: true });
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const duration = 10000;
-const roughDuration = 1750;
+const roughDuration = 800;
+const fastBuildDuration = 4200;
 
 document.body.classList.add("drawing-pending");
 
 function finishWithoutAnimation() {
+  image.style.opacity = "";
   document.body.classList.remove("drawing-pending", "drawing-active");
   document.body.classList.add("drawing-finished");
 }
@@ -77,11 +79,11 @@ function startDrawing() {
   const pickBackground = randomPicker(background.length ? background : candidates);
   const pickForeground = randomPicker(foreground.length ? foreground : candidates);
 
-  function strokeFrom(point, rough, progress) {
-    const angle = point.angle + (Math.random() - .5) * (rough ? 1.15 : .48);
-    const length = rough ? 28 + Math.random() * 86 : 7 + Math.random() * 42;
-    const thickness = rough ? 1.4 + Math.random() * 2.2 : .65 + Math.random() * 1.35;
-    const bend = (Math.random() - .5) * (rough ? 13 : 5);
+  function strokeFrom(point, rough, progress, detail = false) {
+    const angle = point.angle + (Math.random() - .5) * (rough ? 1.15 : detail ? .3 : .48);
+    const length = rough ? 28 + Math.random() * 86 : detail ? 5 + Math.random() * 25 : 7 + Math.random() * 42;
+    const thickness = rough ? 1.4 + Math.random() * 2.2 : detail ? .55 + Math.random() * 1.1 : .65 + Math.random() * 1.35;
+    const bend = (Math.random() - .5) * (rough ? 13 : detail ? 3 : 5);
     const dx = Math.cos(angle);
     const dy = Math.sin(angle);
     const nx = -dy;
@@ -92,7 +94,7 @@ function startDrawing() {
 
     for (let s = 0; s <= steps; s++) {
       const t = s / steps;
-      const wobble = Math.sin(t * Math.PI) * bend + (Math.random() - .5) * (rough ? 2.5 : 1.1);
+      const wobble = Math.sin(t * Math.PI) * bend + (Math.random() - .5) * (rough ? 2.5 : detail ? .65 : 1.1);
       const cx = point.x + dx * length * (t - .5) + nx * wobble;
       const cy = point.y + dy * length * (t - .5) + ny * wobble;
       const widthAtPoint = thickness * (.62 + Math.sin(t * Math.PI) * .38);
@@ -113,7 +115,7 @@ function startDrawing() {
     for (let p = 1; p < points.length; p++) context.lineTo(points[p][0], points[p][1]);
     context.closePath();
     context.clip();
-    context.globalAlpha = rough ? .62 : .42 + progress * .48;
+    context.globalAlpha = rough ? .62 : detail ? .55 + progress * .4 : .5 + progress * .35;
     context.drawImage(source, minX, minStrokeY, maxX - minX, maxStrokeY - minStrokeY, minX, minStrokeY, maxX - minX, maxStrokeY - minStrokeY);
     context.restore();
   }
@@ -131,12 +133,22 @@ function startDrawing() {
     }
 
     if (elapsed < roughDuration) {
-      for (let i = 0; i < 22; i++) strokeFrom(pickBackground(), true, elapsed / roughDuration);
+      for (let i = 0; i < 28; i++) strokeFrom(pickBackground(), true, elapsed / roughDuration);
+    } else if (elapsed < fastBuildDuration) {
+      const buildProgress = (elapsed - roughDuration) / (fastBuildDuration - roughDuration);
+      for (let i = 0; i < 68; i++) {
+        const point = Math.random() < .48 ? pickForeground() : pickAny();
+        strokeFrom(point, false, buildProgress);
+      }
     } else {
-      const detailProgress = Math.min(1, (elapsed - roughDuration) / (duration - roughDuration));
-      for (let i = 0; i < 44; i++) {
-        const point = Math.random() < .58 ? pickForeground() : pickAny();
-        strokeFrom(point, false, detailProgress);
+      const detailProgress = Math.min(1, (elapsed - fastBuildDuration) / (duration - fastBuildDuration));
+      // Front-load the broad sketch, then taper the stroke rate through the slower detail pass.
+      const strokeCount = Math.round(42 - detailProgress * 31);
+      const underlayProgress = Math.min(1, detailProgress * 1.04);
+      image.style.opacity = String(.96 * (1 - Math.pow(1 - underlayProgress, 2)));
+      for (let i = 0; i < strokeCount; i++) {
+        const point = Math.random() < .68 ? pickForeground() : pickAny();
+        strokeFrom(point, false, detailProgress, true);
       }
     }
     requestAnimationFrame(frame);

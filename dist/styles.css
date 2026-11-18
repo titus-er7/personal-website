@@ -12,6 +12,7 @@ body { min-height: 100svh; overflow: hidden; background: var(--paper); }
 .panorama-image { opacity: 1; transition: opacity .45s ease; }
 .panorama-canvas { opacity: 0; }
 .drawing-pending .panorama-image, .drawing-active .panorama-image { opacity: 0; }
+.drawing-active .panorama-image { transition: none; }
 .drawing-active .panorama-canvas { opacity: 1; }
 .drawing-finished .panorama-image { opacity: 1; }
 .drawing-finished .panorama-canvas { opacity: 0; transition: opacity .45s ease; }
