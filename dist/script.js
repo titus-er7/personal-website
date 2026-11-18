@@ -2,9 +2,9 @@ const image = document.querySelector(".panorama-image");
 const canvas = document.querySelector(".panorama-canvas");
 const context = canvas.getContext("2d", { alpha: true });
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const duration = 10000;
-const roughDuration = 800;
-const fastBuildDuration = 4200;
+const duration = 7000;
+const roughDuration = 600;
+const fastBuildDuration = 3000;
 
 document.body.classList.add("drawing-pending");
 
