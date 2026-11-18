@@ -8,8 +8,8 @@ html, body { width: 100%; min-height: 100%; margin: 0; }
 body { min-height: 100svh; overflow: hidden; background: var(--paper); }
 .page { width: 100%; height: 100svh; display: grid; place-items: center; background: var(--paper); }
 .page::before { content: ""; position: fixed; inset: clamp(11px, 1.2vw, 21px); border: 1.5px solid #171717; pointer-events: none; z-index: 10; }
-.panorama { position: relative; width: min(92vw, 1600px); height: calc(min(56svh, 560px) + 35px); margin: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; }
-.panorama-artwork { position: relative; width: 100%; min-height: 0; }
+.panorama { position: relative; width: min(92vw, 1600px); margin: 0; display: grid; grid-template-rows: auto auto; }
+.panorama-artwork { position: relative; justify-self: center; width: min(100%, 168svh, 1680px); aspect-ratio: 3 / 1; }
 .panorama-image, .panorama-canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; }
 .panorama-image { opacity: 1; transition: opacity .45s ease; }
 .panorama-canvas { opacity: 0; }
@@ -18,12 +18,13 @@ body { min-height: 100svh; overflow: hidden; background: var(--paper); }
 .drawing-active .panorama-canvas { opacity: 1; }
 .drawing-finished .panorama-image { opacity: 1; }
 .drawing-finished .panorama-canvas { opacity: 0; transition: opacity .45s ease; }
-.panorama-caption { display: flex; align-items: center; justify-content: space-between; padding: 11px 0 0; color: #191919; font: 400 16px/1.2 "Times New Roman", Times, serif; }
+.panorama-caption { display: flex; align-items: center; justify-content: space-between; justify-self: center; width: min(100%, 168svh, 1680px); padding: 11px 0 0; color: #191919; font: 400 16px/1.2 "Times New Roman", Times, serif; }
 .signature { font-style: italic; font-weight: 400; }
 .section-labels { display: flex; gap: clamp(25px, 4vw, 58px); }
 
 @media (max-width: 620px) {
-  .panorama { width: 90vw; height: calc(42svh + 31px); }
+  .panorama { width: 90vw; }
+  .panorama-artwork, .panorama-caption { width: min(100%, 126svh, 1260px); }
   .panorama-caption { padding-top: 8px; font-size: 14px; }
 }
 
