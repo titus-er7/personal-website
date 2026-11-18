@@ -18,13 +18,13 @@ body { min-height: 100svh; overflow: hidden; background: var(--paper); }
 .drawing-active .panorama-canvas { opacity: 1; }
 .drawing-finished .panorama-image { opacity: 1; }
 .drawing-finished .panorama-canvas { opacity: 0; transition: opacity .45s ease; }
-.panorama-caption { display: flex; align-items: center; justify-content: space-between; padding-top: 11px; color: #191919; font: 500 16px/1.2 Georgia, "Times New Roman", serif; }
-.signature { font-style: italic; font-weight: 600; }
+.panorama-caption { display: flex; align-items: center; justify-content: space-between; padding: 11px clamp(52px, 20vw, 320px) 0; color: #191919; font: 400 16px/1.2 "Times New Roman", Times, serif; }
+.signature { font-style: italic; font-weight: 400; }
 .section-labels { display: flex; gap: clamp(25px, 4vw, 58px); }
 
 @media (max-width: 620px) {
   .panorama { width: 90vw; height: calc(42svh + 31px); }
-  .panorama-caption { padding-top: 8px; font-size: 14px; }
+  .panorama-caption { padding: 8px clamp(36px, 15vw, 86px) 0; font-size: 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
