@@ -3,62 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f4f0ea" />
-    <meta name="description" content="Titus Er — photography, ideas, and work." />
-    <title>Titus Er — Photography, ideas, and work</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+    <meta name="theme-color" content="#f6f2ec" />
+    <meta name="description" content="A graphite panorama of places that stay with us." />
+    <title>Titus Er — Graphite Panorama</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="page-frame" aria-hidden="true"></div>
-
-    <main id="main">
-      <section class="hero" id="home" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <div class="intro-mark">
-            <div class="miniature" role="img" aria-label="A close view of the penguin illustration"></div>
-            <span class="index">/ 01</span>
-          </div>
-          <h1 id="hero-title">photography,<br />ideas, and work<span class="title-rule"></span></h1>
-          <p class="hero-note">A quiet archive of places, notes,<br />and things made along the way.</p>
-        </div>
-
-        <div class="hero-feature">
-          <div class="illustration-stage" role="group" aria-label="Four black-and-white illustrations drawn on page load">
-            <figure class="sketch sketch--pool" style="--delay: 0s">
-              <img class="sketch-rough" src="assets/pool-ink.png" alt="Ink drawing of an indoor competition swimming pool" fetchpriority="high" />
-              <div class="sketch-pass sketch-back" aria-hidden="true"><img src="assets/pool-ink.png" alt="" /></div>
-              <div class="sketch-pass sketch-front" aria-hidden="true"><img src="assets/pool-ink.png" alt="" /></div>
-            </figure>
-            <figure class="sketch sketch--marina" style="--delay: 2.5s">
-              <img class="sketch-rough" src="assets/marina-ink.png" alt="Ink drawing of Marina Bay Sands and the waterfront" fetchpriority="high" />
-              <div class="sketch-pass sketch-back" aria-hidden="true"><img src="assets/marina-ink.png" alt="" /></div>
-              <div class="sketch-pass sketch-front" aria-hidden="true"><img src="assets/marina-ink.png" alt="" /></div>
-            </figure>
-            <figure class="sketch sketch--rotunda" style="--delay: 5s">
-              <img class="sketch-rough" src="assets/rotunda-ink.png" alt="Ink drawing of the University of Virginia Rotunda" fetchpriority="high" />
-              <div class="sketch-pass sketch-back" aria-hidden="true"><img src="assets/rotunda-ink.png" alt="" /></div>
-              <div class="sketch-pass sketch-front" aria-hidden="true"><img src="assets/rotunda-ink.png" alt="" /></div>
-            </figure>
-            <figure class="sketch sketch--penguin" style="--delay: 7.5s">
-              <img class="sketch-rough" src="assets/penguin-ink.png" alt="Ink drawing of a fluffy baby penguin" fetchpriority="high" />
-              <div class="sketch-pass sketch-back" aria-hidden="true"><img src="assets/penguin-ink.png" alt="" /></div>
-              <div class="sketch-pass sketch-front" aria-hidden="true"><img src="assets/penguin-ink.png" alt="" /></div>
-            </figure>
-          </div>
-          <div class="hero-bottom">
-            <a class="signature" href="#home">titus er</a>
-            <div class="main-nav">
-              <span>about</span>
-              <span>thoughts</span>
-              <span>photography</span>
-            </div>
-          </div>
-        </div>
-      </section>
+    <main class="page" id="main">
+      <figure class="panorama" aria-label="A graphite panorama of a swimming pool, the University of Virginia Rotunda, and Marina Bay in Singapore">
+        <img class="panorama-image" src="assets/landmark-panorama.png" alt="A soft pencil panorama: an indoor swimming pool fades into the University of Virginia Rotunda and Marina Bay Sands across the water." fetchpriority="high" />
+        <canvas class="panorama-canvas" aria-hidden="true"></canvas>
+      </figure>
     </main>
     <script src="script.js" defer></script>
   </body>
